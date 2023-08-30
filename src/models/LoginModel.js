@@ -19,7 +19,7 @@ class Login {
     this.user = null
   }
 
-  async signIn() {
+  async signin() {
     this.validate()
     if(this.errors.length > 0) return
 

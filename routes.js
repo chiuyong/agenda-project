@@ -2,16 +2,22 @@ const express = require('express')
 const route = express.Router()
 const homeController = require("./src/controllers/homeController")
 const loginController = require("./src/controllers/loginController")
+const contactController = require("./src/controllers/contactController")
+const { loginRequired } = require("./src/middlewares/middleware")
 
-
-// Rotas da home
+// Home routes
 route.get('/', homeController.index)
 
-// Rotas de login
+// Login routes
 route.get('/login', loginController.index)
 route.post('/login/register', loginController.register)
-route.post('/login/signin', loginController.signIn)
-route.get('/login/logout', loginController.logOut)
+route.post('/login/signin', loginController.signin)
+route.get('/login/logout', loginController.logout)
+
+// Contact routes
+route.get('/contacts', loginRequired, contactController.index)
+route.post('/contacts/register', loginRequired, contactController.register)
+
 
 
 module.exports = route;
