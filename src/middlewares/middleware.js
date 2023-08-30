@@ -1,5 +1,6 @@
 exports.middlewareGlobal = (req, res, next) => {
-  res.locals.localVariable = 'Local variable value' //inject globally into views
+  res.locals.errors = req.flash('errors')
+  res.locals.successes = req.flash('successes')
   next();
 }
 
@@ -8,7 +9,8 @@ exports.otherMiddleware = (req, res, next ) => {
 }
 
 exports.checkCsrfError = (err, req, res, next) => {
-  if (err && err.code === 'EBADCSRFTOKEN') res.render('404')
+  if (err) res.render('404')
+  next()
 }
 
 exports.csrfMiddleware = (req, res, next) => {

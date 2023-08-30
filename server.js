@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const routes = require('./routes')
 const path = require('path')
-const helmet = require('helmet')
+// const helmet = require('helmet')
 const csrf = require('csurf')
 const { middlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware')
 const mongoose = require('mongoose');
@@ -22,7 +22,7 @@ mongoose.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUnifi
   .catch(e => console.log(e))
 
 const sessionOptions = session({
-  secret: 'abc',
+  secret: 'agenda-project',
   store: MongoStore.create({ mongoUrl: process.env.CONNECTIONSTRING }),
   resave: false,
   saveUninitialized: false,
@@ -32,7 +32,7 @@ const sessionOptions = session({
   }
 })
 
-app.use(helmet())
+// app.use(helmet())
 app.use(sessionOptions)
 app.use(flash())
 app.use(express.urlencoded({extended: true}))
