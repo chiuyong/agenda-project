@@ -19,6 +19,26 @@ class Login {
     this.user = null
   }
 
+  async signIn() {
+    this.validate()
+    if(this.errors.length > 0) return
+
+    // check email
+    this.user = await LoginModel.findOne({ email: this.body.email })
+
+    if(!this.user) { 
+      this.errors.push('User does not exist.')
+      return
+    }
+
+    // check password
+    if(!bcryptjs.compareSync(this.body.password, this.user.password)) {
+      this.errors.push('Invalid password')
+      this.user = null
+      return
+    }
+  }
+
   async register() {
     this.validate()
     if(this.errors.length > 0) return
@@ -30,25 +50,20 @@ class Login {
     const salt = bcryptjs.genSaltSync()
     this.body.password = bcryptjs.hashSync(this.body.password, salt)
 
-    try {
-      this.user = await LoginModel.create(this.body)
-    } catch (e) {
-      console.log(e)
-    }
-    console.log(this.body)
+    this.user = await LoginModel.create(this.body)
   }
 
   async userExists() {
-    const user = await LoginModel.findOne({ email: this.body.email })
-    if(user) this.errors.push('Usuário já existe.')
+    this.user = await LoginModel.findOne({ email: this.body.email })
+    if(this.user) this.errors.push('User already exists.')
   }
 
   validate() {
     this.cleanUp()
     // Check e-mail
-    if(!validator.isEmail(this.body.email)) this.errors.push('E-mail inválido')
+    if(!validator.isEmail(this.body.email)) this.errors.push('Invalid e-mail.')
     // Check password
-    if(this.body.password.length < 8 || this.body.password.length > 50) this.errors.push('A senha precisa ter entre 8 e 50 caracteres.')
+    if(this.body.password.length < 8 || this.body.password.length > 50) this.errors.push('The password must be between 8 and 50 characters.')
   }
 
   cleanUp() {
