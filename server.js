@@ -48,8 +48,6 @@ app.use(csrfMiddleware)
 app.use(routes)
 
 app.get('/testes/:idUsuarios?/:parametros?', (req, res) => {
-  console.log(req.params);
-  console.log(req.query);
   res.send(req.query.nome)
 })
 

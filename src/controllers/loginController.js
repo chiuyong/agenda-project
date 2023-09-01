@@ -18,7 +18,6 @@ exports.register = async (req, res) => {
     req.flash('successes', 'User created successfully.')
     req.session.save(() => res.redirect('/login'))
   } catch (e) {
-    console.log(e)
     return res.render('404')
   }
 }
@@ -38,7 +37,6 @@ exports.signin = async (req, res) => {
     req.session.user = login.user
     req.session.save(() => res.redirect('/'))
   } catch (e) {
-    console.log(e)
     return res.render('404')
   }
 }

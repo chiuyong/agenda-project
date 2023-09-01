@@ -53,8 +53,33 @@ Contact.prototype.cleanUp = function() {
 }
 
 Contact.prototype.contactExists = async function() {
-    this.contact = await ContactModel.findOne({ email: this.body.email })
-    if(this.contact) this.errors.push('Contact already exists.')
-  }
+  this.contact = await ContactModel.findOne({ email: this.body.email })
+  if(this.contact) this.errors.push('Contact already exists.')
+}
+
+Contact.prototype.edit = async function(id) {
+  if(typeof id !== 'string') return
+  this.validate()
+  if(this.errors.length > 0) return
+  this.contact = await ContactModel.findByIdAndUpdate(id, this.body, { new: true })
+}
+
+// Static methods -> do not have this keyword
+Contact.searchById = async function(id) {
+  if(typeof id !== 'string') return
+  const contact = await ContactModel.findById(id)
+  return contact
+}
+
+Contact.fetchContacts = async function() {
+  const contacts = await ContactModel.find().sort({ createdAt: -1 }) // 1 for ascending -1 for descending
+  return contacts
+}
+
+Contact.delete = async function(id) {
+  if(typeof id !== 'string') return
+  const contact = await ContactModel.findOneAndDelete({ _id: id})
+  return contact
+}
 
 module.exports = Contact

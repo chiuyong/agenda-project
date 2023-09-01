@@ -77,9 +77,7 @@ class Login {
       email: this.body.email,
       password: this.body.password
     }
-
   }
-
 }
 
 module.exports = Login
