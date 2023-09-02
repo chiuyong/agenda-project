@@ -12,11 +12,11 @@
       <%- include('includes/messages') %>
 
       <div class="row">
-        <div class="col-lg">
+        <div class="col-lg my-5">
           <h4>Register</h4>
           <p>Fill the form below if you do not have an account yet.</p>
     
-          <form action="/login/register" method="POST">
+          <form class="form-register" action="/login/register" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
             <div class="col-12">
               <label for="email" class="form-label">Email</label>
@@ -32,11 +32,11 @@
           </form>
         </div>
 
-        <div class="col-lg">
+        <div class="col-lg my-5">
           <h4>Login</h4>
           <p>Do the login if you have already an account.</p>
 
-          <form action="/login/signin" method="POST">
+          <form class="form-login" action="/login/signin" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
             <div class="col-12">
               <label for="email" class="form-label">Email</label>
