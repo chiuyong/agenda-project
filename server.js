@@ -56,6 +56,7 @@ app.get("/testes/:idUsuarios?/:parametros?", (req, res) => {
   res.send(req.query.nome);
 });
 
+const port = process.env.PORT || 3000;
 app.on("pronto", () => {
-  app.listen(3000, () => {});
+  app.listen(port, () => {});
 });
